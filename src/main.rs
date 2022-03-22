@@ -2,7 +2,7 @@ mod args;
 use std::{fs::File, io::BufReader};
 
 use args::Args;
-use image::{io::Reader, DynamicImage, ImageFormat};
+use image::{io::Reader, DynamicImage, GenericImageView, ImageFormat};
 
 #[derive(Debug)]
 enum ImageDataErrors {
@@ -36,4 +36,9 @@ fn get_smallest_dimension(dim1: (u32, u32), dim2: (u32, u32)) -> (u32, u32) {
     } else {
         dim2
     }
+}
+
+fn standardise_size(image1: DynamicImage, image2: DynamicImage) -> (DynamicImage, DynamicImage) {
+    let (width, height) = get_smallest_dimension(image1.dimensions(), image2.dimensions());
+    print!("Width: {}px | Height: {}px", width, height);
 }
